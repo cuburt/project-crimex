@@ -120,11 +120,10 @@ def update_linegraph(graph_type, hoverData, crime):
             code = hoverData['points'][0]['customdata'][0]
             if code:
                 dataset = False
-                with open(os.path.join(os.path.dirname(__file__), "static/" + str(code) + ".pickle"), 'rb') as data:
-                    dataset = pickle.load(data)
-                if dataset:
-                    df = dataset
-                else:
+                try:
+                    with open(os.path.join(os.path.dirname(__file__), "static/" + str(code) + ".pickle"), 'rb') as data:
+                        df = pickle.load(data)
+                except:
                     df = forecast(filtered_df.loc[filtered_df.CODE == code], 'CRIME_RATE')[0]
 
                 col = 'CRIME_RATE'

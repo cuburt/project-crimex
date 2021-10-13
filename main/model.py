@@ -254,11 +254,10 @@ filtered_df = init_dataset()
 for code in filtered_df['CODE'].unique():
 #     print(filtered_df.loc[filtered_df.CODE == code])
 #     df = upsample(filtered_df.loc[filtered_df.CODE == code])
-    with open(os.path.join(os.path.dirname(__file__), "static/" + str(code) + ".pickle"), 'rb') as data:
-        dataset = pickle.load(data)
-    if dataset:
-        df = dataset
-    else:
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "static/" + str(code) + ".pickle"), 'rb') as data:
+            df = pickle.load(data)
+    except:
         df = forecast(filtered_df.loc[filtered_df.CODE == code], 'CRIME_RATE')[0]
         with open(os.path.join(os.path.dirname(__file__), "static/"+str(code)+".pickle"), 'wb') as output:
             pickle.dump(df, output)
