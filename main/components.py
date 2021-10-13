@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 
 from dash import html
 from dash import dcc
-from callbacks import *
+from model import *
 
 PLOTLY_LOGO = "https://images.plot.ly/logo/new-branding/plotly-logomark.png"
 
@@ -161,10 +161,6 @@ def body():
                                         ),
                                         dcc.RangeSlider(
                                             id='month-slider',
-                                            min=crime_df['M'].min(),
-                                            max=crime_df['M'].max(),
-                                            value=[crime_df['M'].min(), crime_df['M'].max()],
-                                            marks={index+1: month for index, month in enumerate(crime_df['MONTH'].unique())},
                                             step=None,
                                             allowCross=False
                                         )
@@ -207,7 +203,7 @@ def body():
                                         {'label': 'Cumulative Distribution', 'value': 'cum_dist'},
                                         {'label': 'Gaussian Process', 'value': 'gpr'},
                                     ],
-                                    value='MTL',
+                                    value='forecast',
                                     labelStyle = dict(display='block')
                                 ),
                             ], style = {'padding': '20px', 'margin-bottom':'8px'}
@@ -227,7 +223,9 @@ def body():
                                             type='circle',
                                             children=[
                                                 html.Div(id='linegraph-loading-output'),
-                                                dcc.Graph(id='linegraph', style={'height': '100mm'})
+                                                dcc.Graph(id='forecast-time-series',
+                                                          hoverData={'points': [{'customdata': 'Japan'}]},
+                                                          style={'height': '100mm'})
                                             ]
                                         )
                                     )
