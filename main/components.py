@@ -224,8 +224,7 @@ def body():
                                             children=[
                                                 html.Div(id='linegraph-loading-output'),
                                                 dcc.Graph(id='forecast-time-series',
-                                                          hoverData={'points': [{'customdata': 'Japan'}]},
-                                                          style={'height': '100mm'})
+                                                          style={'height': '130mm'})
                                             ]
                                         )
                                     )

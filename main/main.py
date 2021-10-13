@@ -111,7 +111,7 @@ def update_choropleth(selected_months, selected_years, filters, level, crime):
 def update_linegraph(graph_type, hoverData, crime):
     filtered_df = filter_dataset([], [], [], False, crime)
     print(filtered_df)
-
+    fig = go.Figure()
 
     if graph_type == 'forecast':
 
@@ -129,11 +129,11 @@ def update_linegraph(graph_type, hoverData, crime):
                 col = 'CRIME_RATE'
                 print('FORECAST: ', df)
                 fig = go.Figure(
-                    data=[{'x': df[0].index, 'y': df[0][col],
+                    data=[{'x': df.index, 'y': df[col],
                            'mode': 'lines+markers', 'name': col},
-                          {'x': df[0].index, 'y': df[0]['train'],
+                          {'x': df.index, 'y': df['train'],
                            'mode': 'lines+markers', 'name': 'Lead'},
-                          {'x': df[0].index, 'y': df[0]['Forecast'],
+                          {'x': df.index, 'y': df['Forecast'],
                            'mode': 'lines+markers', 'name': 'Forecast'}],
                     layout=go.Layout({"title": 'Forecast',
                                       "xaxis": {
@@ -146,7 +146,7 @@ def update_linegraph(graph_type, hoverData, crime):
                                       "height": 500}
                                      )
                 )
-                return fig
+    return fig
 
 # @app.callback(
 #     dash.dependencies.Output('x-time-series', 'figure'),
